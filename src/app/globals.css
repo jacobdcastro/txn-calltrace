@@ -68,12 +68,17 @@
 }
 
 .mono-container {
-  @apply w-full max-w-5xl mx-auto p-8;
+  @apply w-full max-w-7xl mx-auto p-8;
   @apply border-4 border-solid border-foreground bg-background;
   font-family: var(--font-geist-mono);
 }
 
 .mono-title {
-  @apply text-2xl font-bold mb-8 text-center;
+  @apply text-2xl font-bold mb-8 text-left;
+  font-family: var(--font-geist-mono);
+}
+
+.mono-subtitle {
+  @apply text-lg font-bold mb-2 text-left;
   font-family: var(--font-geist-mono);
 }
