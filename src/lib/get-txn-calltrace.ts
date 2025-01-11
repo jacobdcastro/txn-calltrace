@@ -8,10 +8,10 @@ if (!QUICKNODE_RPC_URL) {
 
 export interface Call {
   from: `0x${string}`;
-  gas: `0x${string}`;
-  gasUsed: `0x${string}`;
-  to: `0x${string}`;
-  input: `0x${string}`;
+  gas?: `0x${string}`;
+  gasUsed?: `0x${string}`;
+  to?: `0x${string}`;
+  input?: `0x${string}`;
   output?: `0x${string}`;
   value?: `0x${string}`;
   type?: 'CALL' | 'DELEGATECALL' | 'STATICCALL';
@@ -19,12 +19,12 @@ export interface Call {
 }
 
 export interface TraceCallResult {
-  from: `0x${string}`;
-  gas: `0x${string}`;
-  gasUsed: `0x${string}`;
-  to: `0x${string}`;
-  input: `0x${string}`;
-  output: `0x${string}`;
+  from?: `0x${string}`;
+  gas?: `0x${string}`;
+  gasUsed?: `0x${string}`;
+  to?: `0x${string}`;
+  input?: `0x${string}`;
+  output?: `0x${string}`;
   calls?: Call[];
 }
 

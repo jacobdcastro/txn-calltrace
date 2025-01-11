@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible"
-import { EnhancedCall, EnhancedTraceCallResult } from "@/lib/process-abi"
+import { EnhancedCall, EnhancedTraceCallResult } from "@/lib/enhance-call"
 import { ChevronDown, ChevronRight } from "lucide-react"
 import { useState } from "react"
 import { hexToNumber } from "viem"

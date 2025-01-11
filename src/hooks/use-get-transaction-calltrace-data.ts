@@ -1,4 +1,4 @@
-import { EnhancedTraceCallResult } from "@/lib/process-abi";
+import { EnhancedTraceCallResult } from "@/lib/enhance-call";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
