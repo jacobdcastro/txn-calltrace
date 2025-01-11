@@ -46,12 +46,12 @@ export const TxnSearch = () => {
 
   return (
     <div className="mono-container">
-      <h1 className="mono-title">
+      <h1 className="mono-title mb-8">
         Ethereum Transaction Debug
       </h1>
 
-      <div className="space-y-6">
-        <div className="space-y-2">
+      <div className="">
+        <div className="mb-6">
           <label
             htmlFor="txHash"
             className="block text-sm font-medium"
@@ -63,14 +63,14 @@ export const TxnSearch = () => {
             value={txHash}
             onChange={(e) => setTxHash(e.target.value)}
             placeholder="0x..."
-            className="font-mono border-2 h-12"
+            className="font-mono border-2 h-12 mb-4"
           />
         </div>
 
         <Button
           onClick={handleSubmit}
           disabled={isFetching}
-          className="w-full h-12 text-base font-mono border-2 border-foreground"
+          className="w-full h-12 mt-4 text-base font-mono border-2 border-foreground"
           variant="outline"
         >
           {isFetching ? "loading" : "Decode Transaction"}

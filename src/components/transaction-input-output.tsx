@@ -8,6 +8,8 @@ interface TxnInputOutputProps {
   outputParams?: readonly AbiParameter[];
   decodedInputParams?: any[];
   decodedOutputParams?: any[];
+  error?: string;
+  revertReason?: string;
 }
 
 export function TxnInputOutput({
@@ -18,6 +20,8 @@ export function TxnInputOutput({
   decodedInputParams,
   outputParams,
   decodedOutputParams,
+  error,
+  revertReason,
 }: TxnInputOutputProps) {
   const formatParamValue = (value: any, type: string) => {
     if (type === 'bool') {
@@ -31,6 +35,29 @@ export function TxnInputOutput({
       <div>
         <h2 className="mono-subtitle">Input/Output</h2>
       </div>
+
+      {/* Error Section */}
+      {(error || revertReason) && (
+        <div className="border-4 border-destructive bg-destructive/10 mb-[-4px]">
+          <div className="p-4">
+            <div className="text-destructive pb-3">error data</div>
+            <div className="font-mono text-sm space-y-1">
+              {error && (
+                <div className="flex gap-2">
+                  <span className="text-muted-foreground whitespace-nowrap min-w-[80px]">error:</span>
+                  <span className="break-all">{error}</span>
+                </div>
+              )}
+              {revertReason && (
+                <div className="flex gap-2">
+                  <span className="text-muted-foreground whitespace-nowrap min-w-[80px]">revertReason:</span>
+                  <span className="break-all">{revertReason}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="border-4 border-foreground bg-background mb-[-4px]">
         <div className="p-4">

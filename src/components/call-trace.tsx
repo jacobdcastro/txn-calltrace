@@ -4,6 +4,7 @@ import { TxnInputOutput } from "@/components/transaction-input-output"
 import { Button } from "@/components/ui/button"
 import { Collapsible, CollapsibleContent } from "@/components/ui/collapsible"
 import { EnhancedCall } from "@/lib/enhance-call"
+import { findRevertInCallTrace } from "@/lib/find-revert-in-calltrace"
 import { ChevronDown, ChevronRight } from "lucide-react"
 import { useState } from "react"
 import { AbiParameter, hexToNumber } from "viem"
@@ -96,6 +97,7 @@ function CallNode({ call, depth = 0 }: { call: EnhancedCall; depth?: number }) {
               outputParams={call.outputParams as unknown as readonly AbiParameter[]}
               decodedInputParams={call.decodedInputParams}
               decodedOutputParams={call.decodedOutputParams}
+              {...findRevertInCallTrace(call)}
             />
           </div>
         </CollapsibleContent>

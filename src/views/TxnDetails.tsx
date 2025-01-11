@@ -5,6 +5,8 @@ import { TransactionHeader } from "@/components/transaction-header";
 import { TxnInputOutput } from "@/components/transaction-input-output";
 import { useGetTransactionCallTraceData } from "@/hooks/use-get-transaction-calltrace-data";
 import { useGetTransactionReceipt } from "@/hooks/use-get-transaction-receipt";
+import { EnhancedCall } from "@/lib/enhance-call";
+import { findRevertInCallTrace } from "@/lib/find-revert-in-calltrace";
 import { AbiParameter } from "abitype";
 import { Search } from "lucide-react";
 import Link from "next/link";
@@ -36,7 +38,10 @@ export const TxnDetails = ({ txHash }: TxnDetailsProps) => {
           <Search className="h-6 w-6" />
         </Link>
       </div>
-      {data && <TransactionHeader receipt={data} />}
+      {data && <TransactionHeader
+        receipt={data}
+        reverted={!!findRevertInCallTrace(callTrace as EnhancedCall)}
+      />}
       {isLoading || callTraceLoading ? <div>Loading...</div> : (
         <>
           {callTrace && (
@@ -48,6 +53,7 @@ export const TxnDetails = ({ txHash }: TxnDetailsProps) => {
               outputParams={callTrace.outputParams as unknown as AbiParameter[]}
               decodedInputParams={callTrace.decodedInputParams}
               decodedOutputParams={callTrace.decodedOutputParams}
+              {...findRevertInCallTrace(callTrace)}
             />
           )}
           {callTrace && <CallTrace callTrace={callTrace} />}

@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export function useGetTransactionReceipt({ txHash, enabled }: { txHash: string; enabled: boolean }) {
   return useQuery<TransactionReceipt>({
-    queryKey: ["transactionReceipt", txHash],
+    queryKey: ["transactionReceipt", txHash.toLowerCase()],
     queryFn: ({ queryKey }) => {
       const [_, txHash] = queryKey;
       if (!txHash) throw new Error("transaction hash is required");

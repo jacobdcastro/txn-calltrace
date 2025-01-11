@@ -4,13 +4,14 @@ import { useState } from "react";
 
 interface TransactionHeaderProps {
   receipt: TransactionReceipt;
+  reverted?: boolean;
 }
 
 // helper to convert hex to decimal
 const hexToDecimal = (hex: string) => parseInt(hex, 16).toString();
 
-export function TransactionHeader({ receipt }: TransactionHeaderProps) {
-  const isSuccess = receipt.status === '0x1';
+export function TransactionHeader({ receipt, reverted }: TransactionHeaderProps) {
+  const isSuccess = receipt.status === '0x1' && !reverted;
 
   const [hashCopied, setHashCopied] = useState(false);
   const [fromCopied, setFromCopied] = useState(false);

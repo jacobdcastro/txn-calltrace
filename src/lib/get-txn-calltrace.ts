@@ -16,6 +16,8 @@ export interface Call {
   value?: `0x${string}`;
   type?: 'CALL' | 'DELEGATECALL' | 'STATICCALL';
   calls?: Call[];
+  error?: string;
+  revertReason?: string;
 }
 
 export async function getTransactionCallTrace(txHash: string): Promise<Call> {
