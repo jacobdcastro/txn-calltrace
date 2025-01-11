@@ -19,6 +19,13 @@ export function TxnInputOutput({
   outputParams,
   decodedOutputParams,
 }: TxnInputOutputProps) {
+  const formatParamValue = (value: any, type: string) => {
+    if (type === 'bool') {
+      return value ? 'true' : 'false';
+    }
+    return JSON.stringify(value);
+  };
+
   return (
     <div className="mb-8">
       <div>
@@ -38,10 +45,10 @@ export function TxnInputOutput({
               <div className="space-y-1">
                 {inputParams?.map((param, index) => (
                   <div key={index} className="flex gap-2">
-                    <span className="text-muted-foreground">{param.type}</span>
-                    <span>{param.name}:</span>
+                    <span className="text-muted-foreground whitespace-nowrap min-w-[80px]">{param.type}</span>
+                    <span className="whitespace-nowrap min-w-[80px]">{param.name}:</span>
                     <span className="break-all">
-                      {JSON.stringify(decodedInputParams[index])}
+                      {formatParamValue(decodedInputParams[index], param.type)}
                     </span>
                   </div>
                 ))}
@@ -61,10 +68,10 @@ export function TxnInputOutput({
               <div className="space-y-1">
                 {outputParams?.map((param, index) => (
                   <div key={index} className="flex gap-2">
-                    <span className="text-muted-foreground">{param.type}</span>
-                    <span>{param.name || `param${index}`}:</span>
+                    <span className="text-muted-foreground whitespace-nowrap min-w-[80px]">{param.type}</span>
+                    <span className="whitespace-nowrap min-w-[80px]">{param.name || `param${index}`}:</span>
                     <span className="break-all">
-                      {JSON.stringify(decodedOutputParams[index])}
+                      {formatParamValue(decodedOutputParams[index], param.type)}
                     </span>
                   </div>
                 ))}

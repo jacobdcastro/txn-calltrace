@@ -9,7 +9,7 @@ import { useState } from "react";
 
 export const TxnSearch = () => {
   const router = useRouter();
-  const [txHash, setTxHash] = useState<string>("0xb26207246255bccf733334fc5a700e9a608cb81b7c398e9b3ba04e2019247ad9");
+  const [txHash, setTxHash] = useState<string>("");
   const { toast } = useToast();
 
   const { refetch, isFetching } = useGetTransactionReceipt({ txHash, enabled: false });

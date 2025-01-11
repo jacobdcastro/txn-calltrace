@@ -92,8 +92,8 @@ function CallNode({ call, depth = 0 }: { call: EnhancedCall; depth?: number }) {
               input={call.input as `0x${string}`}
               output={call.output as `0x${string}`}
               parsedFnSelector={call.parsedFnSelector}
-              inputParams={call.inputParams as readonly AbiParameter[]}
-              outputParams={call.outputParams as readonly AbiParameter[]}
+              inputParams={call.inputParams as unknown as readonly AbiParameter[]}
+              outputParams={call.outputParams as unknown as readonly AbiParameter[]}
               decodedInputParams={call.decodedInputParams}
               decodedOutputParams={call.decodedOutputParams}
             />

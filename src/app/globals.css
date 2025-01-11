@@ -74,7 +74,7 @@
 }
 
 .mono-title {
-  @apply text-2xl font-bold mb-8 text-left;
+  @apply text-2xl font-bold text-left;
   font-family: var(--font-geist-mono);
 }
 

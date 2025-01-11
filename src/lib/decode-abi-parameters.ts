@@ -45,8 +45,11 @@ export function decodeAbiParametersEnhanced(params: readonly AbiParameter[], dat
   if (!data) return [];
 
   try {
+    // remove the function selector (first 4 bytes / 8 characters after 0x)
+    const inputData = `0x${data.slice(10)}` as `0x${string}`;
+
     // decode using viem's decoder
-    const decodedValues = decodeAbiParameters(params, data);
+    const decodedValues = decodeAbiParameters(params, inputData);
 
     // format each parameter value
     return params.map((param, index) =>
@@ -54,6 +57,7 @@ export function decodeAbiParametersEnhanced(params: readonly AbiParameter[], dat
     );
   } catch (error) {
     console.warn('failed to decode abi parameters:', error);
-    return [];
+    // Return an array of nulls instead of empty array to maintain parameter positions
+    return Array(params.length).fill(null);
   }
 } 
