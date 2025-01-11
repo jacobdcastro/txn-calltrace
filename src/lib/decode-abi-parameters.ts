@@ -1,7 +1,7 @@
 import { AbiParameter } from "abitype";
 import { decodeAbiParameters } from "viem";
 
-// TODO figure out how to handle tuple types better
+// TODO figure out how to handle tuple types better, for now just return the raw bytes 
 
 function formatAbiParameterValue(param: AbiParameter, value: any): any {
   // handle tuple types
@@ -45,8 +45,10 @@ export function decodeAbiParametersEnhanced(params: readonly AbiParameter[], dat
   if (!data) return [];
 
   try {
-    // remove the function selector (first 4 bytes / 8 characters after 0x)
-    const inputData = `0x${data.slice(10)}` as `0x${string}`;
+    // Only slice if the data includes a function selector (length > 10)
+    const inputData = data.length > 10
+      ? `0x${data.slice(10)}` as `0x${string}`
+      : data;
 
     // decode using viem's decoder
     const decodedValues = decodeAbiParameters(params, inputData);
