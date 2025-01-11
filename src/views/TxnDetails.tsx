@@ -5,6 +5,7 @@ import { TransactionHeader } from "@/components/transaction-header";
 import { TxnInputOutput } from "@/components/transaction-input-output";
 import { useGetTransactionCallTraceData } from "@/hooks/use-get-transaction-calltrace-data";
 import { useGetTransactionReceipt } from "@/hooks/use-get-transaction-receipt";
+import { AbiParameter } from "abitype";
 import { Search } from "lucide-react";
 import Link from "next/link";
 
@@ -40,11 +41,11 @@ export const TxnDetails = ({ txHash }: TxnDetailsProps) => {
         <>
           {callTrace && (
             <TxnInputOutput
-              input={callTrace.input}
-              output={callTrace.output}
+              input={callTrace.input as `0x${string}`}
+              output={callTrace.output as `0x${string}`}
               parsedFnSelector={callTrace.parsedFnSelector}
-              inputParams={callTrace.inputParams}
-              outputParams={callTrace.outputParams}
+              inputParams={callTrace.inputParams as unknown as AbiParameter[]}
+              outputParams={callTrace.outputParams as unknown as AbiParameter[]}
               decodedInputParams={callTrace.decodedInputParams}
               decodedOutputParams={callTrace.decodedOutputParams}
             />
