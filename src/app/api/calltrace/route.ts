@@ -1,5 +1,6 @@
 import { enhanceCallTraceWithVerifiedSource } from "@/lib/enhance-call";
-import { getTransactionCallTrace } from "@/lib/get-txn-calltrace";
+import { Call, getTransactionCallTrace } from "@/lib/get-txn-calltrace";
+import { serializeBigInts } from "@/lib/serialize-bigints";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -18,9 +19,12 @@ export async function GET(request: Request) {
     const callTrace = await getTransactionCallTrace(txHash);
 
     // enhance call trace with verified contract data
-    const enhancedTrace = await enhanceCallTraceWithVerifiedSource(callTrace);
+    const enhancedTrace = await enhanceCallTraceWithVerifiedSource(callTrace as Call);
 
-    return NextResponse.json(enhancedTrace);
+    // serialize any BigInt values before sending response
+    const serializedTrace = serializeBigInts(enhancedTrace);
+
+    return NextResponse.json(serializedTrace);
   } catch (error) {
     console.error("Error processing call trace:", error);
     return NextResponse.json(
@@ -28,4 +32,4 @@ export async function GET(request: Request) {
       { status: 500 }
     );
   }
-
+}

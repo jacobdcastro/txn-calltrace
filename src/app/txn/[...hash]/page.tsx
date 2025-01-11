@@ -14,10 +14,6 @@ export default function TransactionPage() {
   const { data, isLoading, error } = useGetTransactionReceipt({ txHash, enabled: true });
   const { data: callTrace, isLoading: callTraceLoading, error: callTraceError } = useGetTransactionCallTraceData({ txHash, enabled: !!data });
 
-  if (isLoading || callTraceLoading) {
-    return <div>Loading...</div>;
-  }
-
   if (error) {
     return <div>Error: {error.message}</div>;
   }
@@ -30,8 +26,22 @@ export default function TransactionPage() {
     <div className="mono-container">
       <h1 className="mono-title">Transaction Details</h1>
       {data && <TransactionHeader receipt={data} />}
-      {callTrace && <TxnInputOutput callTrace={callTrace} />}
-      {callTrace && <CallTrace callTrace={callTrace} />}
+      {isLoading || callTraceLoading ? <div>Loading...</div> : (
+        <>
+          {callTrace && (
+            <TxnInputOutput
+              input={callTrace.input}
+              output={callTrace.output}
+              parsedFnSelector={callTrace.parsedFnSelector}
+              inputParams={callTrace.inputParams}
+              outputParams={callTrace.outputParams}
+              decodedInputParams={callTrace.decodedInputParams}
+              decodedOutputParams={callTrace.decodedOutputParams}
+            />
+          )}
+          {callTrace && <CallTrace callTrace={callTrace} />}
+        </>
+      )}
     </div>
   );
 }

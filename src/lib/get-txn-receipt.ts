@@ -7,11 +7,8 @@ if (!QUICKNODE_RPC_URL) {
 }
 
 export interface Log {
-  // address from which this log was generated
   address: string;
-  // array of 0-4 32-byte topics (indexed log arguments)
   topics: string[];
-  // the non-indexed log argument data
   data: string;
   blockNumber: string;
   transactionHash: string;

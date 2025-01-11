@@ -18,17 +18,7 @@ export interface Call {
   calls?: Call[];
 }
 
-export interface TraceCallResult {
-  from?: `0x${string}`;
-  gas?: `0x${string}`;
-  gasUsed?: `0x${string}`;
-  to?: `0x${string}`;
-  input?: `0x${string}`;
-  output?: `0x${string}`;
-  calls?: Call[];
-}
-
-export async function getTransactionCallTrace(txHash: string): Promise<TraceCallResult> {
+export async function getTransactionCallTrace(txHash: string): Promise<Call> {
   const response = await axios.post(QUICKNODE_RPC_URL as string, {
     jsonrpc: "2.0",
     id: 1,
