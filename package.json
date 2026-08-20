@@ -12,6 +12,8 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
+    "@effect/platform": "^0.97.1",
+    "@effect/platform-node": "^0.108.1",
     "@radix-ui/react-collapsible": "^1.1.2",
     "@radix-ui/react-slot": "^1.1.1",
     "@radix-ui/react-switch": "^1.1.2",
@@ -22,6 +24,7 @@
     "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "effect": "^3.22.1",
     "lucide-react": "^0.469.0",
     "next": "15.1.11",
     "react": "^19.0.0",

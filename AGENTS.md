@@ -7,16 +7,17 @@ pnpm. It has no database or other local backing services — it is one Next.js p
 talks to two external HTTP APIs. Standard scripts live in `package.json` (`dev`, `build`,
 `start`, `test`, `lint`); the update script already runs `pnpm install`.
 
-### Required environment variables (non-obvious gotcha)
-- `NEXT_PUBLIC_QUICKNODE_RPC_URL` and `ETHERSCAN_API_KEY` are read at module top-level in
-  `src/lib/get-txn-calltrace.ts`, `src/lib/get-txn-receipt.ts`, and
-  `src/lib/get-verified-contract.ts`, which **throw at import** if the var is unset. This means
-  the home page and the `enhance-call` Jest suite both fail to even load without them.
+### Required environment variables
+- `NEXT_PUBLIC_QUICKNODE_RPC_URL` and `ETHERSCAN_API_KEY` are read lazily via Effect `Config`
+  when a live service layer is provided (not at module import). Missing values fail as a
+  tagged `ConfigError` at runtime.
 - The update script auto-creates two gitignored env files if missing (they hold no real
   secrets): `.env.test` (dummy values, consumed by `jest.setup.ts`) and `.env.local`
   (used by `pnpm dev`). Delete a file and re-run the update script to regenerate it.
 - If you set real credentials via the Secrets panel, those injected env vars take precedence
   over the `.env*` files (Next.js and dotenv do not override already-set env vars).
+- Effect unit tests inject config and HTTP via `Layer` overrides, so they do not depend on
+  live credentials. `.env.test` remains for any code that still reads `process.env` directly.
 
 ### RPC endpoint notes
 - The RPC must support `debug_traceTransaction` with the `callTracer` tracer. The free public

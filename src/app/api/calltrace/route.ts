@@ -1,6 +1,6 @@
-import { enhanceCallTraceWithVerifiedSource } from "@/lib/enhance-call";
-import { Call, getTransactionCallTrace } from "@/lib/get-txn-calltrace";
-import { serializeBigInts } from "@/lib/serialize-bigints";
+import { callTracePipeline } from "@/lib/effect/calltrace-pipeline";
+import { AppLiveNode } from "@/lib/effect/layers-node";
+import { Effect } from "effect";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -15,14 +15,9 @@ export async function GET(request: Request) {
   }
 
   try {
-    // get initial call trace
-    const callTrace = await getTransactionCallTrace(txHash);
-
-    // enhance call trace with verified contract data
-    const enhancedTrace = await enhanceCallTraceWithVerifiedSource(callTrace as Call);
-
-    // serialize any BigInt values before sending response
-    const serializedTrace = serializeBigInts(enhancedTrace);
+    const serializedTrace = await Effect.runPromise(
+      callTracePipeline(txHash).pipe(Effect.provide(AppLiveNode))
+    );
 
     return NextResponse.json(serializedTrace);
   } catch (error) {
